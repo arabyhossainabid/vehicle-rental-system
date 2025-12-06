@@ -20,7 +20,7 @@ app.use('/api/v1/vehicles', vehicleRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Vehicle Rental System API');
+    res.send('Vehicle Rental System API Running Successfully');
 });
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

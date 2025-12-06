@@ -1,13 +1,23 @@
-require('dotenv').config();
-const { Pool } = require('pg');
+import dotenv from 'dotenv';
+import { Pool } from 'pg';
 
-const pool = new Pool({
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    database: process.env.DB_NAME || 'vehicle_rental',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'postgres',
-});
+dotenv.config();
+
+const connectionString = process.env.DB_HOST?.includes('neon.tech')
+    ? `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?sslmode=require`
+    : undefined;
+
+const pool = new Pool(
+    connectionString
+        ? { connectionString }
+        : {
+            host: process.env.DB_HOST || 'localhost',
+            port: parseInt(process.env.DB_PORT || '5432'),
+            database: process.env.DB_NAME || 'vehicle_rental',
+            user: process.env.DB_USER || 'postgres',
+            password: process.env.DB_PASSWORD || 'postgres',
+        }
+);
 
 console.log('Testing database connection...');
 console.log('Config:', {
@@ -18,21 +28,26 @@ console.log('Config:', {
     password: process.env.DB_PASSWORD ? '***' : 'NOT SET'
 });
 
-pool.query('SELECT NOW()', (err, res) => {
-    if (err) {
-        console.error('\n Connection FAILED:');
-        console.error('Error:', err.message);
-        console.error('Code:', err.code);
+interface PgError extends Error {
+    code?: string;
+}
 
-        if (err.code === '28P01') {
+pool.query('SELECT NOW()', (err: Error | undefined, res) => {
+    if (err) {
+        const pgErr = err as PgError;
+        console.error('\n Connection FAILED:');
+        console.error('Error:', pgErr.message);
+        console.error('Code:', pgErr.code);
+
+        if (pgErr.code === '28P01') {
             console.error('\n Solution: Password authentication failed.');
             console.error('   - Check your DB_PASSWORD in .env file');
             console.error('   - Make sure it matches your PostgreSQL password');
-        } else if (err.code === '3D000') {
+        } else if (pgErr.code === '3D000') {
             console.error('\n Solution: Database does not exist.');
             console.error('   - Create the database: CREATE DATABASE vehicle_rental;');
             console.error('   - Or update DB_NAME in .env file');
-        } else if (err.code === 'ECONNREFUSED') {
+        } else if (pgErr.code === 'ECONNREFUSED') {
             console.error('\n Solution: Cannot connect to PostgreSQL server.');
             console.error('   - Make sure PostgreSQL is running');
             console.error('   - Check DB_HOST and DB_PORT in .env file');
@@ -61,4 +76,3 @@ pool.query('SELECT NOW()', (err, res) => {
         });
     }
 });
-

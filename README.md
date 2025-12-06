@@ -22,4 +22,5 @@ https://vehicle-rental-system-gamma.vercel.app/
    DATABASE_URL: `postgresql://neondb_owner:npg_mpC2nPNEqJc4@ep-quiet-king-a4op4kdz-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require`
    JWT_SECRET : `a-string-secret-at-least-256-bits-long`
 4. Run: `npm run dev`
-5. 
+5. admin email: admin@example.com
+password: Admin123456

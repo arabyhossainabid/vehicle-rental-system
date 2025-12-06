@@ -5,8 +5,8 @@ https://vehicle-rental-system-gamma.vercel.app/
 - JWT দিয়ে লগইন/রেজিস্ট্রেশন করেছি (Admin & Customer)
 - গাড়ি যোগ, আপডেট, ডিলিট এবং লিস্ট দেখা
 - বুকিং করা, ক্যান্সেল করা, এপ্রুভ আর রিটার্ন করা
-- অ্যাডমিন দিয়ে ইউজার ও বুকিং ম্যানেজ
-- Helmet, CORS, Bcrypt দিয়ে বেসিক সিকিউরিটি
+- অ্যাডমিন দিয়ে ইউজার ও বুকিং ম্যানেজ করা
+- Helmet, CORS, Bcrypt দিয়ে বেসিক সিকিউরিটি করা
 
 ## Tech Stack
 - Node.js, Express.js, TypeScript
@@ -15,12 +15,11 @@ https://vehicle-rental-system-gamma.vercel.app/
 - Deployment: Vercel
 
 ## Setup & Usage Instructions
-1. git clone: `git clone https://github.com/your-username/vehicle-rental-system.git`
-2. npm install: `npm install`
-3. Set .env: 
+1. npm install: `npm install`
+2. Set .env: 
    PORT=5000
    DATABASE_URL: `postgresql://neondb_owner:npg_mpC2nPNEqJc4@ep-quiet-king-a4op4kdz-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require`
    JWT_SECRET : `a-string-secret-at-least-256-bits-long`
-4. Run: `npm run dev`
-5. admin email: admin@example.com
+3. Run: `npm run dev`
+4. admin email: admin@example.com
 password: Admin123456

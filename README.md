@@ -1,5 +1,5 @@
 ## Live URL
-https://vehicle-rental-system-gamma.vercel.app/
+https://y-mauve-delta-29.vercel.app/
 
 ## Features
 - JWT দিয়ে লগইন/রেজিস্ট্রেশন করেছি (Admin & Customer)

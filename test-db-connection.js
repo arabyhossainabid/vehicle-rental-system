@@ -1,4 +1,3 @@
-// Quick database connection test script
 require('dotenv').config();
 const { Pool } = require('pg');
 
@@ -21,29 +20,28 @@ console.log('Config:', {
 
 pool.query('SELECT NOW()', (err, res) => {
     if (err) {
-        console.error('\n❌ Connection FAILED:');
+        console.error('\n Connection FAILED:');
         console.error('Error:', err.message);
         console.error('Code:', err.code);
 
         if (err.code === '28P01') {
-            console.error('\n💡 Solution: Password authentication failed.');
+            console.error('\n Solution: Password authentication failed.');
             console.error('   - Check your DB_PASSWORD in .env file');
             console.error('   - Make sure it matches your PostgreSQL password');
         } else if (err.code === '3D000') {
-            console.error('\n💡 Solution: Database does not exist.');
+            console.error('\n Solution: Database does not exist.');
             console.error('   - Create the database: CREATE DATABASE vehicle_rental;');
             console.error('   - Or update DB_NAME in .env file');
         } else if (err.code === 'ECONNREFUSED') {
-            console.error('\n💡 Solution: Cannot connect to PostgreSQL server.');
+            console.error('\n Solution: Cannot connect to PostgreSQL server.');
             console.error('   - Make sure PostgreSQL is running');
             console.error('   - Check DB_HOST and DB_PORT in .env file');
         }
         process.exit(1);
     } else {
-        console.log('\n✅ Connection SUCCESSFUL!');
+        console.log('\n Connection SUCCESSFUL!');
         console.log('Database time:', res.rows[0].now);
 
-        // Test if tables exist
         pool.query(`
             SELECT table_name
             FROM information_schema.tables
@@ -52,11 +50,11 @@ pool.query('SELECT NOW()', (err, res) => {
             if (err) {
                 console.error('Error checking tables:', err.message);
             } else {
-                console.log('\n📊 Tables found:', res.rows.length);
+                console.log('\nTables found:', res.rows.length);
                 if (res.rows.length > 0) {
-                    console.log('   -', res.rows.map(r => r.table_name).join(', '));
+                    console.log('  -', res.rows.map(r => r.table_name).join(', '));
                 } else {
-                    console.log('   ⚠️  No tables found. Run setup.sql to create tables.');
+                    console.log('No tables found. Run setup.sql to create tables.');
                 }
             }
             pool.end();

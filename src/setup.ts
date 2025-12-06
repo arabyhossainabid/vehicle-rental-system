@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import pool from './config/database';
 
 const createTables = async () => {
@@ -38,6 +39,23 @@ const createTables = async () => {
     try {
         await pool.query(query);
         console.log('Tables created successfully');
+
+        // Seed initial data
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash('password123', salt);
+
+        const seedQuery = `
+            INSERT INTO users (name, email, password, phone, role) 
+            VALUES 
+            ('Admin User', 'admin@example.com', $1, '1234567890', 'admin'),
+            ('Normal User', 'user@example.com', $1, '0987654321', 'customer');
+        `;
+
+        await pool.query(seedQuery, [hashedPassword]);
+        console.log('Initial data seeded successfully');
+        console.log('Admin: admin@example.com / password123');
+        console.log('User: user@example.com / password123');
+
     } catch (err) {
         console.error('Error creating tables:', err);
     } finally {

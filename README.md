@@ -6,7 +6,6 @@ https://vehicle-rental-system-gamma.vercel.app/
 - গাড়ি যোগ, আপডেট, ডিলিট এবং লিস্ট দেখা
 - বুকিং করা, ক্যান্সেল করা, এপ্রুভ আর রিটার্ন করা
 - অ্যাডমিন দিয়ে ইউজার ও বুকিং ম্যানেজ করা
-- Helmet, CORS, Bcrypt দিয়ে বেসিক সিকিউরিটি করা
 
 ## Tech Stack
 - Node.js, Express.js, TypeScript

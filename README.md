@@ -21,4 +21,4 @@ https://vehicle-rental-system-gamma.vercel.app/
   - JWT_SECRET : `a-string-secret-at-least-256-bits-long`
 3. Run: `npm run dev`
 4. admin email: admin@example.com
-- password: Admin123456
+  - password: Admin123456

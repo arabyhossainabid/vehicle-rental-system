@@ -64,7 +64,6 @@ export class UserService {
             throw new Error('Cannot delete user with active bookings');
         }
 
-        // Delete non-active bookings (cancelled and returned) to avoid foreign key constraint
         await pool.query('DELETE FROM bookings WHERE customer_id = $1 AND status != $2', [userId, 'active']);
 
         await pool.query('DELETE FROM users WHERE id = $1', [userId]);

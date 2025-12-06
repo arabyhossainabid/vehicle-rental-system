@@ -11,7 +11,6 @@ export class AuthService {
     async registerUser(userData: any) {
         const { name, email, password, phone, role } = userData;
 
-        // Validate email format
         if (!this.validateEmail(email)) {
             throw new Error('Invalid email format');
         }
@@ -20,7 +19,6 @@ export class AuthService {
             throw new Error('Password must be at least 6 characters long');
         }
 
-        // Validate role
         if (role && !['admin', 'customer'].includes(role)) {
             throw new Error('Role must be either "admin" or "customer"');
         }
@@ -44,7 +42,6 @@ export class AuthService {
     async loginUser(credentials: any) {
         const { email, password } = credentials;
 
-        // Validate email format
         if (!this.validateEmail(email)) {
             throw new Error('Invalid email format');
         }

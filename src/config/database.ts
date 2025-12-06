@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Use connection string for Neon (handles SSL automatically)
 const connectionString = process.env.DB_HOST?.includes('neon.tech')
     ? `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?sslmode=require`
     : undefined;

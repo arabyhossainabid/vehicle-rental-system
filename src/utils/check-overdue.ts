@@ -24,15 +24,14 @@ export const checkOverdueBookings = async () => {
 
         console.log('Overdue check completed.');
     } catch (error: any) {
-        // Handle database connection errors gracefully
         if (error.code === '28P01' || error.message?.includes('password authentication failed')) {
-            console.log('⚠ Database connection failed. Please check your .env file credentials.');
-            console.log('   The server will continue running, but auto-return feature is disabled.');
+            console.log('Database connection failed. Please check your .env file credentials.');
+            console.log('The server will continue running, but auto-return feature is disabled.');
             return;
         }
         if (error.code === '3D000' || error.message?.includes('database') || error.message?.includes('does not exist')) {
-            console.log('⚠ Database not found. Please create the database and run setup.sql');
-            console.log('   The server will continue running, but auto-return feature is disabled.');
+            console.log('Database not found. Please create the database and run setup.sql');
+            console.log('The server will continue running, but auto-return feature is disabled.');
             return;
         }
         console.error('Error checking overdue bookings:', error.message);

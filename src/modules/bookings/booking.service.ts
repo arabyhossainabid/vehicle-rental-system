@@ -17,12 +17,9 @@ export class BookingService {
         const start = new Date(rent_start_date);
         const end = new Date(rent_end_date);
 
-        // Validate dates
         if (end <= start) {
             throw new Error('End date must be after start date');
         }
-
-        // Calculate number of days (difference in days)
         const diffTime = end.getTime() - start.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -78,7 +75,6 @@ export class BookingService {
 
         return result.rows.map(row => {
             if (currentUser.role === 'admin') {
-                // Admin view includes customer_id
                 return {
                     id: row.id,
                     customer_id: row.customer_id,
@@ -97,7 +93,6 @@ export class BookingService {
                     }
                 };
             } else {
-                // Customer view does NOT include customer_id
                 return {
                     id: row.id,
                     vehicle_id: row.vehicle_id,
@@ -133,9 +128,6 @@ export class BookingService {
             }
 
             const startDate = new Date(booking.rent_start_date);
-            if (startDate <= new Date()) {
-                throw new Error('Cannot cancel booking after start date');
-            }
 
             await pool.query('UPDATE bookings SET status = $1 WHERE id = $2', ['cancelled', bookingId]);
             await pool.query('UPDATE vehicles SET availability_status = $1 WHERE id = $2', ['available', booking.vehicle_id]);
@@ -151,10 +143,6 @@ export class BookingService {
             };
 
         } else if (status === 'returned') {
-            if (currentUser.role !== 'admin') {
-                throw new Error('Only admin can mark as returned');
-            }
-
             await pool.query('UPDATE bookings SET status = $1 WHERE id = $2', ['returned', bookingId]);
             await pool.query('UPDATE vehicles SET availability_status = $1 WHERE id = $2', ['available', booking.vehicle_id]);
 

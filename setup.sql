@@ -1,9 +1,7 @@
--- Drop existing tables if they exist
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS vehicles CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
--- Create users table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -13,7 +11,6 @@ CREATE TABLE users (
     role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'customer'))
 );
 
--- Create vehicles table
 CREATE TABLE vehicles (
     id SERIAL PRIMARY KEY,
     vehicle_name VARCHAR(255) NOT NULL,
@@ -23,7 +20,6 @@ CREATE TABLE vehicles (
     availability_status VARCHAR(20) NOT NULL CHECK (availability_status IN ('available', 'booked'))
 );
 
--- Create bookings table
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     customer_id INTEGER NOT NULL REFERENCES users(id),

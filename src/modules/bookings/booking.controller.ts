@@ -10,7 +10,6 @@ interface AuthRequest extends Request {
 export const createBooking = async (req: AuthRequest, res: Response): Promise<void> => {
     const currentUser = req.user;
 
-    // Admin can specify customer_id, customers can only create bookings for themselves
     let customerId: number;
     if (currentUser.role === 'admin') {
         customerId = req.body.customer_id;
@@ -23,9 +22,7 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
             return;
         }
     } else {
-        // Customer can only create bookings for themselves - ignore customer_id from request if provided
         customerId = currentUser.id;
-        // If customer provided a different customer_id, reject it
         if (req.body.customer_id && req.body.customer_id !== currentUser.id) {
             res.status(403).json({
                 success: false,

@@ -12,17 +12,14 @@ export class VehicleService {
     async createVehicle(vehicleData: any) {
         const { vehicle_name, type, registration_number, daily_rent_price, availability_status } = vehicleData;
 
-        // Validate type
         if (type && !this.validateVehicleType(type)) {
             throw new Error('Type must be one of: car, bike, van, SUV');
         }
 
-        // Validate availability_status
         if (availability_status && !this.validateAvailabilityStatus(availability_status)) {
             throw new Error('Availability status must be either "available" or "booked"');
         }
 
-        // Validate daily_rent_price
         if (daily_rent_price <= 0) {
             throw new Error('Daily rent price must be a positive number');
         }
@@ -67,17 +64,14 @@ export class VehicleService {
     async updateVehicle(vehicleId: string, vehicleData: any) {
         const { vehicle_name, type, registration_number, daily_rent_price, availability_status } = vehicleData;
 
-        // Validate type if provided
         if (type && !this.validateVehicleType(type)) {
             throw new Error('Type must be one of: car, bike, van, SUV');
         }
 
-        // Validate availability_status if provided
         if (availability_status && !this.validateAvailabilityStatus(availability_status)) {
             throw new Error('Availability status must be either "available" or "booked"');
         }
 
-        // Validate daily_rent_price if provided
         if (daily_rent_price && daily_rent_price <= 0) {
             throw new Error('Daily rent price must be a positive number');
         }
@@ -138,7 +132,6 @@ export class VehicleService {
             throw new Error('Cannot delete vehicle with active bookings');
         }
 
-        // Delete non-active bookings (cancelled and returned) to avoid foreign key constraint
         await pool.query('DELETE FROM bookings WHERE vehicle_id = $1 AND status != $2', [vehicleId, 'active']);
 
         await pool.query('DELETE FROM vehicles WHERE id = $1', [vehicleId]);

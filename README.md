@@ -21,7 +21,7 @@ https://y-mauve-delta-29.vercel.app/
 1. npm install: `npm install`
 2. Set .env:
 
-- DATABASE_URL: `postgresql://neondb_owner:npg_mpC2nPNEqJc4@ep-quiet-king-a4op4kdz-pooler.       us-east-1.aws.neon.tech/neondb?sslmode=require`
+- DATABASE_URL: psql 'postgresql://neondb_owner:npg_mpC2nPNEqJc4@ep-quiet-king-a4op4kdz-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
 - JWT_SECRET : `a-string-secret-at-least-256-bits-long`
 - PORT=5000
 - DB_USER=neondb_owner
